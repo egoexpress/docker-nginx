@@ -4,13 +4,19 @@ services:
   web:
     image: nginx:1-alpine
     restart: always
+    network_mode: "host"
     volumes:
       - html:/usr/share/nginx/html
-    networks:
-      frontend:
+      - certbot:/var/www/certbot/:ro
+      - certs:/etc/nginx/ssl/:ro
 
-networks:
-  frontend:
+  certbot:
+    image: certbot/certbot:v1.29.0
+    volumes:
+      - certbot:/var/www/certbot
+      - certs:/etc/letsencrypt
 
 volumes:
   html:
+  certbot:
+  certs:
