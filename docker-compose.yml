@@ -5,11 +5,17 @@ services:
     restart: always
     volumes:
       - html:/usr/share/nginx/html
+    environment:
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+      - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
     networks:
       frontend:
 
-networks:
-  frontend:
-
 volumes:
   html:
+
+networks:
+  frontend:
+    name: proxy_frontend
+    external: true
